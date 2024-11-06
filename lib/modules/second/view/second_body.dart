@@ -9,21 +9,16 @@ import 'package:pro_multimedia_zadanie/modules/shared/view/widgets/colored_recom
 import 'package:pro_multimedia_zadanie/modules/shared/view/widgets/image_recommended_box.dart';
 import 'package:pro_multimedia_zadanie/modules/shared/view/widgets/recommended_icon.dart';
 
-class SecondBody extends StatefulWidget {
+class SecondBody extends StatelessWidget {
   const SecondBody({
     super.key,
   });
 
   @override
-  State<SecondBody> createState() => _SecondBodyState();
-}
-
-class _SecondBodyState extends State<SecondBody> {
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _buildAppBar(),
-      body: _buildRecommendedSection(),
+      body: _buildRecommendedSection(context),
     );
   }
 
@@ -112,7 +107,9 @@ class _SecondBodyState extends State<SecondBody> {
     );
   }
 
-  Widget _buildRecommendedSection() {
+  Widget _buildRecommendedSection(
+    BuildContext context,
+  ) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16.0),

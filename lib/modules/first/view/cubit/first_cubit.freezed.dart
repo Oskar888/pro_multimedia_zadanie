@@ -19,19 +19,19 @@ mixin _$FirstState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function() loaded,
+    required TResult Function(VideoPlayerController controller) loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function()? loaded,
+    TResult? Function(VideoPlayerController controller)? loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function()? loaded,
+    TResult Function(VideoPlayerController controller)? loaded,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -119,7 +119,7 @@ class _$LoadingImpl implements _Loading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function() loaded,
+    required TResult Function(VideoPlayerController controller) loaded,
   }) {
     return loading();
   }
@@ -128,7 +128,7 @@ class _$LoadingImpl implements _Loading {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function()? loaded,
+    TResult? Function(VideoPlayerController controller)? loaded,
   }) {
     return loading?.call();
   }
@@ -137,7 +137,7 @@ class _$LoadingImpl implements _Loading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function()? loaded,
+    TResult Function(VideoPlayerController controller)? loaded,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -187,6 +187,8 @@ abstract class _$$LoadedImplCopyWith<$Res> {
   factory _$$LoadedImplCopyWith(
           _$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
       __$$LoadedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({VideoPlayerController controller});
 }
 
 /// @nodoc
@@ -199,54 +201,80 @@ class __$$LoadedImplCopyWithImpl<$Res>
 
   /// Create a copy of FirstState
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? controller = null,
+  }) {
+    return _then(_$LoadedImpl(
+      controller: null == controller
+          ? _value.controller
+          : controller // ignore: cast_nullable_to_non_nullable
+              as VideoPlayerController,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$LoadedImpl implements _Loaded {
-  const _$LoadedImpl();
+  const _$LoadedImpl({required this.controller});
+
+  @override
+  final VideoPlayerController controller;
 
   @override
   String toString() {
-    return 'FirstState.loaded()';
+    return 'FirstState.loaded(controller: $controller)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$LoadedImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$LoadedImpl &&
+            (identical(other.controller, controller) ||
+                other.controller == controller));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, controller);
+
+  /// Create a copy of FirstState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
+      __$$LoadedImplCopyWithImpl<_$LoadedImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function() loaded,
+    required TResult Function(VideoPlayerController controller) loaded,
   }) {
-    return loaded();
+    return loaded(controller);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function()? loaded,
+    TResult? Function(VideoPlayerController controller)? loaded,
   }) {
-    return loaded?.call();
+    return loaded?.call(controller);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function()? loaded,
+    TResult Function(VideoPlayerController controller)? loaded,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded();
+      return loaded(controller);
     }
     return orElse();
   }
@@ -284,5 +312,14 @@ class _$LoadedImpl implements _Loaded {
 }
 
 abstract class _Loaded implements FirstState {
-  const factory _Loaded() = _$LoadedImpl;
+  const factory _Loaded({required final VideoPlayerController controller}) =
+      _$LoadedImpl;
+
+  VideoPlayerController get controller;
+
+  /// Create a copy of FirstState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

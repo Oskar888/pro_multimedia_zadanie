@@ -4,5 +4,7 @@ part of 'first_cubit.dart';
 class FirstState with _$FirstState {
   const factory FirstState.loading() = _Loading;
 
-  const factory FirstState.loaded() = _Loaded;
+  const factory FirstState.loaded({
+    required VideoPlayerController controller,
+  }) = _Loaded;
 }

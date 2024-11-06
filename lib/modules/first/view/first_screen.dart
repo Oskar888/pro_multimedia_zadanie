@@ -30,8 +30,10 @@ class FirstScreen extends StatelessWidget {
             loading: () {
               return const LoadingView();
             },
-            loaded: () {
-              return const FirstBody();
+            loaded: (controller) {
+              return FirstBody(
+                controller: controller,
+              );
             },
           );
         },

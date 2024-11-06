@@ -11,70 +11,18 @@ import 'package:pro_multimedia_zadanie/modules/shared/view/widgets/colored_recom
 import 'package:pro_multimedia_zadanie/modules/shared/view/widgets/image_recommended_box.dart';
 import 'package:pro_multimedia_zadanie/modules/shared/view/widgets/recommended_icon.dart';
 
-class FirstBody extends StatefulWidget {
+class FirstBody extends StatelessWidget {
   const FirstBody({
+    required this.controller,
     super.key,
   });
 
-  @override
-  State<FirstBody> createState() => _FirstBodyState();
-}
-
-class _FirstBodyState extends State<FirstBody> {
-  late VideoPlayerController _controller;
-  late Future<void> _initializeVideoPlayerFuture;
-
-  @override
-  void initState() {
-    super.initState();
-
-    // Set asset
-    _controller = VideoPlayerController.asset(
-      'assets/videos/video.mp4',
-    );
-
-    // Initialize the video player
-    _initializeVideoPlayerFuture = _controller.initialize();
-
-    // Add a listener to detect when the video finishes playing
-    _controller.addListener(_videoPlayerListener);
-
-    // Start the video player when initialized
-    _playVideo();
-  }
-
-  @override
-  void dispose() {
-    _controller.removeListener(_videoPlayerListener);
-    _controller.dispose();
-    super.dispose();
-  }
-
-  void _videoPlayerListener() {
-    // Check if the video has finished playing
-    if (_controller.value.isInitialized &&
-        !_controller.value.isPlaying &&
-        _controller.value.position == _controller.value.duration) {
-      // Remove listener immediately
-      _controller.removeListener(_videoPlayerListener);
-      // Navigate to the next screen
-      final FirstCubit cubit = context.read();
-      cubit.routeToSecondScreen();
-    }
-  }
-
-  void _playVideo() async {
-    // Wait for the video player to finish initializing
-    await _initializeVideoPlayerFuture;
-
-    // Check if the controller is initialized before playing
-    if (_controller.value.isInitialized) {
-      await _controller.play();
-    }
-  }
+  final VideoPlayerController controller;
 
   @override
   Widget build(BuildContext context) {
+    controller.play();
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: _buildAppBar(),
@@ -90,7 +38,7 @@ class _FirstBodyState extends State<FirstBody> {
             top: 220.0,
             left: 0.0,
             right: 0.0,
-            child: _buildRecommendedSection(),
+            child: _buildRecommendedSection(context),
           ),
         ],
       ),
@@ -184,22 +132,15 @@ class _FirstBodyState extends State<FirstBody> {
   }
 
   Widget _buildVideoSection() {
-    return FutureBuilder(
-      future: _initializeVideoPlayerFuture,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          return AspectRatio(
-            aspectRatio: _controller.value.aspectRatio,
-            child: VideoPlayer(_controller),
-          );
-        } else {
-          return const SizedBox();
-        }
-      },
+    return AspectRatio(
+      aspectRatio: controller.value.aspectRatio,
+      child: VideoPlayer(controller),
     );
   }
 
-  Widget _buildRecommendedSection() {
+  Widget _buildRecommendedSection(
+    BuildContext context,
+  ) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16.0),
