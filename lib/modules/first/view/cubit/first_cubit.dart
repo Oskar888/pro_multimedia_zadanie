@@ -44,9 +44,6 @@ class FirstCubit extends Cubit<FirstState> {
   }
 
   void routeToSecondScreen() {
-    _controller.removeListener(_videoPlayerListener);
-    _controller.dispose();
-
     AppRouter.instance.replace(
       AppRoutes.second.route,
     );
